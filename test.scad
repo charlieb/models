@@ -1,6 +1,7 @@
 use <list-comprehension-demos/sweep.scad>
 use <scad-utils/transformations.scad>
 use <scad-utils/shapes.scad>
+use <obiscad/obiscad/vector.scad>
 
 // star module from https://gist.github.com/anoved/9622826
 // points = number of points (minimum 3)
@@ -34,31 +35,44 @@ module star(points, outer, inner) {
 	}
 }
 
-$fn=22;
-R = 10;
-step = 0.15;
+$fn=32;
+R = 50;
+step = 0.25;
+depth = 5;
+star_r = 2.5;
 
 function theta(t) = acos(1-t/R);
-function normal_spiral(t,turns) =
+function spiral(t,turns) =
   rotation([t*19*turns,0,0]) *
-  translation([R-t,R*sin(theta(t)),0]) *
-  rotation([-90*cos(t),0,0]) *
-  rotation([0,90-t*9,0]) *
-  rotation([0,0,90-t*9]);
+  translation([R-t,R*sin(theta(t)),0])
+  ;
 
 //sweep(circle(0.5), [for (t=[0:step:2*R]) normal_spiral(t,2)]);
 
 difference() {
   rotate([0,90,0]) sphere(R);
-  sphere(R*0.9);
+  //sphere(R*0.9);
 	for (t=[0:step:2*R]) {
-		multmatrix(scaling([0.9,0.9,0.9])*normal_spiral(t, 10)) {
-			linear_extrude(height=5) star(5,1,0.5);
-      //sphere(R*0.15);
-    };
+    m = spiral(t, 10);
+    v = [for(i=[0:2]) (m*[0,0,0,1])[i]];
+    translate(v*(1-depth/R))
+      orientate(v) {
+        //cylinder(r=0.5, h=4); };
+        linear_extrude(height=R) star(5,star_r,star_r/2);
+        //sphere(R*0.15);
+      };
   };
 };
 
+//for (t=[0:step:2*R]) {
+//  m = spiral(t, 10);
+//  v = [for(i=[0:2]) (m*[0,0,0,1])[i]];
+//  translate(v*0.9) 
+//    orientate(v) {
+//        linear_extrude(height=3) star(5,1,0.5);
+//       // cylinder(r=0.5, h=4);
+//        };
+//};
 //for (t=[0:step*3:2*R]) {
 //    multmatrix(normal_spiral(t, 2.5)) {
 //			star(5,1,0.5);
@@ -66,3 +80,8 @@ difference() {
 //      //circle(1);
 //    };
 //};
+//
+
+echo(translation([1,2,3]));
+echo(translation([2,3,5])*[0,0,0,1]);
+
