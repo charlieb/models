@@ -104,9 +104,14 @@ function spiral(t,turns) =
 //sweep(circle(0.5), [for (t=[0:step:2*R]) normal_spiral(t,2)]);
 
 scl = [2.5,1,1];
+scale([1.75,1.75,1.75])
+translate([0,0,-201])
+
+difference() {
+rotate([0,90,0])
 difference() {
   scale(scl) rotate([0,90,0]) sphere(R);
-  //sphere(R*0.9);
+  //scale(scl*0.95) rotate([0,90,0]) sphere(R);
   for (t=[0:step:2*R]) {
     m = spiral(t, 10);
     tr = scaling(scl);
@@ -120,6 +125,10 @@ difference() {
         //sphere(R*0.15);
       };
   };
+};
+
+translate([0,0,-100]) cube(size=200, center=true);
+translate([0,0,200]) cube(size=200, center=true);
 };
 
 //for (t=[0:step:2*R]) {
@@ -143,10 +152,3 @@ difference() {
 //};
 //
 
-m = scaling([10,56,66]) * rotation([32,56,76]) * translation([1,2,3]);
-mi = inverse4x4(m);
-echo(m*[0,0,0,1]);
-echo(mi*m*[0,0,0,1]);
-
-echo(m);
-echo(transpose4x4(transpose4x4(m)));
