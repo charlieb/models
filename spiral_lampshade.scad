@@ -90,10 +90,10 @@ module star(points, outer, inner) {
 }
 
 $fn=32;
-R = 50;
+R = 51;
 step = 0.25;
-depth = 2;
-star_r = 6.0;
+depth = 1.2;
+star_r = 5.0;
 
 function theta(t) = acos(1-t/R);
 function spiral(t,turns) =
@@ -103,52 +103,35 @@ function spiral(t,turns) =
 
 //sweep(circle(0.5), [for (t=[0:step:2*R]) normal_spiral(t,2)]);
 
-scl = [2.5,1,1];
+scl = [1.2,1,1];
 scale([1.75,1.75,1.75])
-translate([0,0,-201])
-
-difference() {
-rotate([0,90,0])
-difference() {
-  scale(scl) rotate([0,90,0]) sphere(R);
-  //scale(scl*0.95) rotate([0,90,0]) sphere(R);
-  for (t=[0:step:2*R]) {
-    m = spiral(t, 10);
-    tr = scaling(scl);
-    trit = transpose4x4(inverse4x4(tr));
-    v = [for(i=[0:2]) (trit*m*[0,0,0,1])[i]];
-    p = [for(i=[0:2]) (tr*m*[0,0,0,1])[i]];
-    translate(p*(1-depth/R))
-      orientate(v) {
-        //cylinder(r=0.5, h=4); };
-        linear_extrude(height=R) star(5,star_r,star_r/2);
-        //sphere(R*0.15);
+  difference() {
+    rotate([0,90,0])
+      difference() {
+        scale(scl) rotate([0,90,0]) sphere(R);
+        scale(scl*0.975) rotate([0,90,0]) sphere(R);
+        for (t=[0:step:2*R]) {
+          m = spiral(t, 10);
+          tr = scaling(scl);
+          trit = transpose4x4(inverse4x4(tr));
+          v = [for(i=[0:2]) (trit*m*[0,0,0,1])[i]];
+          p = [for(i=[0:2]) (tr*m*[0,0,0,1])[i]];
+          translate(p*(1-depth/R))
+            orientate(v) {
+              //cylinder(r=0.5, h=4); };
+            linear_extrude(height=R) star(5,star_r,star_r/2);
+          //sphere(R*0.15);
+        };
       };
   };
-};
 
-translate([0,0,-100]) cube(size=200, center=true);
+//translate([0,0,-100]) cube(size=200, center=true);
 translate([0,0,200]) cube(size=200, center=true);
 };
 
-//for (t=[0:step:2*R]) {
-//  m = spiral(t, 10);
-//  tr = scaling(scl);
-//  trit = transpose4x4(inverse4x4(tr));
-//  v = [for(i=[0:2]) (trit*m*[0,0,0,1])[i]];
-//  p = [for(i=[0:2]) (tr*m*[0,0,0,1])[i]];
-//  translate(p*0.9) 
-//    orientate(v) {
-//        linear_extrude(height=30) star(5,1,0.5);
-//       // cylinder(r=0.5, h=4);
-//        };
-//};
-//for (t=[0:step*3:2*R]) {
-//    multmatrix(normal_spiral(t, 2.5)) {
-//			star(5,1,0.5);
-//      //cylinder(r1=R*0.1, r2=0, h=5);
-//      //circle(1);
-//    };
-//};
-//
-
+// holder - has actual radius
+translate([0,0,175])
+difference() {
+  cylinder(d=110, h = 30);
+  cylinder(d=110 - 4, h = 30);
+};
