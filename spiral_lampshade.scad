@@ -104,8 +104,10 @@ function spiral(t,turns) =
 //sweep(circle(0.5), [for (t=[0:step:2*R]) normal_spiral(t,2)]);
 
 scl = [1.2,1,1];
+rotate([0,180,0])
+union() {
+difference() {
 scale([1.75,1.75,1.75])
-  difference() {
     rotate([0,90,0])
       difference() {
         scale(scl) rotate([0,90,0]) sphere(R);
@@ -120,18 +122,24 @@ scale([1.75,1.75,1.75])
             orientate(v) {
               //cylinder(r=0.5, h=4); };
             linear_extrude(height=R) star(5,star_r,star_r/2);
-          //sphere(R*0.15);
+        //sphere(R*0.15);
         };
       };
   };
 
-//translate([0,0,-100]) cube(size=200, center=true);
-translate([0,0,200]) cube(size=200, center=true);
+  translate([0,0,75]) cylinder(d=110-4, h = 60);
 };
 
+
 // holder - has actual radius
-translate([0,0,175])
+translate([0,0,80])
 difference() {
   cylinder(d=110, h = 30);
   cylinder(d=110 - 4, h = 30);
+  // Ventilation slots
+  for(a=[0:22.5:180]) {
+    translate([0,0,7]) rotate([0,90,a]) cylinder(d=10, h=200, center=true);
+  }
+
+};
 };
