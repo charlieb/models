@@ -9,8 +9,12 @@ module outline(dxf,r) {
   }
 }
 
-plate_z = 3;
+plate_z = 1; //3;
 relief_z = 0.6;
 
-linear_extrude(height=plate_z + relief_z) import("minnie_bow_spots_test.svg");
+union() {
+//translate([0,0,plate_z]) linear_extrude(height=relief_z) import("minnie_bow_spots_test.svg");
+//linear_extrude(height=plate_z + relief_z) import("minnie_bow_spots_test.svg");
+linear_extrude(height=plate_z) square(size = [120,170], center = false);
+}
 
