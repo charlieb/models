@@ -18,10 +18,10 @@ union() {
 //translate([5,2,plate_z]) linear_extrude(height=relief_z + plate_z) import("minnie_plain.svg");
 
 //The others need one import and the plate
-//translate([20,5,plate_z]) linear_extrude(height=relief_z) import("daisy_plain.svg");
-translate([20,5,plate_z]) linear_extrude(height=relief_z) scale([0.95,0.95]) import("clarabel_plain.svg");
+translate([20,5,plate_z]) linear_extrude(height=relief_z + plate_z) import("daisy_plain.svg");
+//translate([20,5,plate_z]) linear_extrude(height=relief_z + plate_z) scale([0.95,0.95]) import("clarabel_plain.svg");
 
 // The plate
-linear_extrude(height=plate_z) square(size = [130,170], center = false);
+//linear_extrude(height=plate_z) square(size = [130,170], center = false);
 }
 
