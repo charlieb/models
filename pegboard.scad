@@ -32,11 +32,11 @@ module peg() {
 
 module track_section() {
   marble_d = 15.5;
-  wire_d = 1.3;
+  wire_d = 1.34;
   module wire_snap(a=0) {
     rotate([0,0,a])
     difference() {
-      cylinder(d=wire_d + 1.5, h=3);
+      cylinder(d=wire_d + 3.0, h=3);
       translate([0,0,-0.05]) cylinder(d=wire_d, h=3.1);
       translate([-0.0,-5.8,-10]) scale([1,2,1]) rotate([0,0,45]) cube(size=[2,2,20]);
     };
@@ -44,8 +44,8 @@ module track_section() {
   
   track_guage = marble_d - 2;
   cube(size=[track_guage,2,2]);
-  translate([1,-1,-0]) wire_snap(35);
-  translate([track_guage-1,-1,-0]) wire_snap(-35);
+  translate([1,-1,-0]) wire_snap(45);
+  translate([track_guage-1,-1,-0]) wire_snap(-45);
 }
 
 //translate([0,0,02.5]) peg();
