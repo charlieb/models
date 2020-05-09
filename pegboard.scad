@@ -72,10 +72,11 @@ module wire_track_section() {
 
 pipe_d = 33.2;
 pipe_hs = [16.7, 17.1, 15.1, 15.7, 12.8,15.3, 15.0, 15.3, 16.7, 16.7];
+pipe_h = 17;
 pipe_wall = 3.8;
 pipe_inner_d = 25.8;
 margin = 0.4;
-cradle_top = -pipe_d/2 + 15.3;
+cradle_top = -pipe_d/2 + pipe_h;
 cradle_wall = 3;
 cradle_d = pipe_d + cradle_wall*2;
 cradle_thickness = peg_d - 1;
