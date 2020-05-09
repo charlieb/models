@@ -38,22 +38,34 @@ module wire_snap(a=0) {
     cylinder(d=wire_d + 4.0, h=5);
     translate([0,0,-0.05]) cylinder(d=wire_d, h=5.1);
     translate([-0.0,-6.5,-10]) scale([1.0,2.5,1]) rotate([0,0,45]) cube(size=[2,2,20]);
-//    translate([-0,-10,-1]) cube(size=[10,10,10]);
 
-    translate([0,-6,0]) rotate([45,0,0]) cube(size=[10,10,10], center=true);
-    translate([0,-6,5]) rotate([-45,0,0]) cube(size=[10,10,10], center=true);
+    translate([0,-5,7]) rotate([45,0,0]) cube(size=[10,10,10], center=true);
+    translate([0,-4.5,7]) rotate([60,0,0]) cube(size=[10,10,10], center=true);
+    translate([0,-4.5,-2]) rotate([30,0,0]) cube(size=[10,10,10], center=true);
+    translate([0,-6.2,0]) cube(size=[10,10,10], center=true);
   };
 };
 
+track_gauge = marble_d - 2;
 module wire_track_section() {
-  track_guage = marble_d - 2;
-  cube(size=[track_guage,2,5]);
-  translate([1,-1,-0]) wire_snap(20);
-  translate([track_guage-1,-1,-0]) wire_snap(-20);
+  scale([1,2,1])
+  difference() {
+    cylinder(d=track_gauge/2,h=3);
+    translate([0,0,-0.05]) cylinder(d=track_gauge/2-2,h=3.1);
+    translate([0, -track_gauge/2, -1]) cube([track_gauge, track_gauge, 5]);
+  }
+
+  difference() {
+    union() {
+      translate([2,track_gauge/2-1,-0]) wire_snap(50);
+      translate([2,-track_gauge/2+1,-0]) wire_snap(130);
+    };
+    translate([3.75,-track_gauge,-0.05]) cube(size=[10, track_gauge*2,5.1]);
+    
+  };
 };
 
-translate([0,0,02.5]) peg();
-//translate([12,7,0]) rotate([0,0,90]) wire_track_section();
+//translate([12,7,0]) rotate([0,0,0]) wire_track_section();
 //translate([10,2,0]) rotate([0,0,90]) rotate_extrude(angle=90) translate([5,0,0]) square([5,5]);
 //wire_snap(0);
 //translate([0,-6,5]) rotate([-45,0,0]) cube(size=[10,10,10], center=true);
@@ -87,7 +99,6 @@ module pipe_holder() {
   }
 }
 
-translate([30,25,0]) 
-pipe_holder();
-
+translate([0,0,02.5]) peg();
+translate([30,25,0]) pipe_holder();
 
