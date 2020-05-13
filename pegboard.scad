@@ -100,6 +100,32 @@ module pipe_holder() {
   }
 }
 
-translate([0,0,02.5]) peg();
-translate([30,25,0]) pipe_holder();
+//translate([0,0,02.5]) peg();
+//translate([30,25,0]) pipe_holder();
 
+// end
+
+grip_thickness = 0.8;
+grip_height = 7;
+module end_stop() {
+  difference () {
+    union() {
+      cylinder(h=1, d = pipe_d + grip_thickness); 
+
+      linear_extrude(height=grip_height)
+      difference() {
+        circle(d = pipe_d + grip_thickness + 0.4);
+        circle(d = pipe_d + margin);
+      }
+
+      linear_extrude(height=grip_height)
+      difference() {
+        circle(d = pipe_inner_d - margin);
+        circle(d = pipe_inner_d - grip_thickness);
+      }
+    }
+    translate([0, -50, -0.1]) cube(size=[100,100,100]);
+  }
+}
+
+end_stop();
