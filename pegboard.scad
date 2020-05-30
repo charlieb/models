@@ -74,7 +74,7 @@ pipe_d = 33.2;
 pipe_hs = [16.7, 17.1, 15.1, 15.7, 12.8,15.3, 15.0, 15.3, 16.7, 16.7];
 pipe_h = 17;
 pipe_wall = 3.8;
-pipe_inner_d = 25.8;
+pipe_inner_d = 25.5;
 margin = 0.4;
 cradle_top = -pipe_d/2 + pipe_h;
 cradle_wall = 3;
@@ -105,7 +105,7 @@ module pipe_holder() {
 
 // end
 
-grip_thickness = 0.8;
+grip_thickness = 2.4;
 grip_height = 7;
 module end_stop() {
   difference () {
@@ -115,16 +115,16 @@ module end_stop() {
       linear_extrude(height=grip_height)
       difference() {
         circle(d = pipe_d + grip_thickness + 0.4);
-        circle(d = pipe_d + margin);
+        circle(d = pipe_d);
       }
 
       linear_extrude(height=grip_height)
       difference() {
-        circle(d = pipe_inner_d - margin);
+        circle(d = pipe_inner_d);
         circle(d = pipe_inner_d - grip_thickness);
       }
     }
-    translate([0, -50, -0.1]) cube(size=[100,100,100]);
+    translate([7, -50, -0.1]) cube(size=[100,100,100]);
   }
 }
 
