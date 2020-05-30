@@ -10,7 +10,7 @@ module outline(r) {
 
 scale([0.50,0.50,1])
 union() {
-  linear_extrude(height=7)  import("firetruck.svg");
+  linear_extrude(height=7) minkowski() { import("firetruck.svg"); circle(r=0.4); }
   linear_extrude(height=1) minkowski() { import("firetruck.svg"); circle(r=2); }
   //linear_extrude(height=5.5) import("toothless_detail.svg");
   //linear_extrude(height=1) minkowski() { import("toothless_detail.svg"); circle(r=2); }
